@@ -7,3 +7,4 @@ class Food(models.Model):
     item_name = models.CharField(max_length= 240)
     item_description = models.CharField(max_length= 240)
     item_price = models.IntegerField()
+    item_image = models.CharField(max_length= 1_000, default = 'https://cdn.dribbble.com/users/1012566/screenshots/4187820/media/985748436085f06bb2bd63686ff491a5.jpg?compress=1&resize=400x300&vertical=top')
