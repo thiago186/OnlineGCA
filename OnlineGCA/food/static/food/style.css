@@ -1,3 +1,7 @@
 body{
     background-color: lightgrey;
 }
+
+.navbar .nav-link {
+    color: white;
+}
