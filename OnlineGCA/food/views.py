@@ -3,6 +3,9 @@ from django.http import HttpResponse
 from .models import Food
 from .forms import ItemForm
 from django.template import loader
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+
 
 # Create your views here.
 def TestHomeView(request):
@@ -25,7 +28,8 @@ def TestDetailView(request, item_id):
 
 def TestAddItem(request):
     form = ItemForm(request.POST or None)
-    if form.is_valid():
+    if form.is_valid(form):
+        form.instance.username = request.user
         form.save()
         return redirect('food:TestItemView')
     return render(request,'food/AddItem.html', {'form':form})
@@ -37,4 +41,12 @@ def TestUpdateItem(request, item_id):
         form.save()
         return redirect('food:TestItemView')
     return render(request, 'food/AddItem.html', {'form':form, 'item': item})
+
+def DeleteItem(request, item_id):
+    item = Food.objects.get(id = item_id)
+    if request.method == 'POST':
+        item.delete()
+        return redirect('food:TestItemView')
+    return render(request, 'food/DeleteConfirmation.html', {'item': item})
+
 
