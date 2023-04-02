@@ -20,7 +20,7 @@ def TestDetailView(request, item_id):
     item = Food.objects.get(pk = item_id)
     context = {
             'item': item,
-    }   
+    }
     return render(request, 'food/TestDetail.html', context)
 
 def TestAddItem(request):
@@ -29,3 +29,12 @@ def TestAddItem(request):
         form.save()
         return redirect('food:TestItemView')
     return render(request,'food/AddItem.html', {'form':form})
+
+def TestUpdateItem(request, item_id):
+    item = Food.objects.get(id = item_id)
+    form = ItemForm(request.POST or None, instance= item)
+    if form.is_valid():
+        form.save()
+        return redirect('food:TestItemView')
+    return render(request, 'food/AddItem.html', {'form':form, 'item': item})
+
